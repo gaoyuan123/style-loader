@@ -18,7 +18,8 @@ var stylesInDom = {},
 	}),
 	singletonElement = null,
 	singletonCounter = 0,
-	styleElementsInsertedAtTop = [];
+	styleElementsInsertedAtTop = [],
+	fixUrls = require("./fixUrls");
 
 module.exports = function(list, options) {
 	if(typeof DEBUG !== "undefined" && DEBUG) {
@@ -231,6 +232,7 @@ function updateLink(linkElement, obj) {
 	var sourceMap = obj.sourceMap;
 
 	if(sourceMap) {
+		css = fixUrls(css);
 		// http://stackoverflow.com/a/26603875
 		css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
 	}
